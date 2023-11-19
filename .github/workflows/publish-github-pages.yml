@@ -1,7 +1,8 @@
 name: Publish to GitHub Pages
 run-name: ${{ github.actor }} is publishing to GitHub pages
 on: [push]
-
+permissions:
+  contents: write
 jobs:
   publish:
     runs-on: ubuntu-latest
