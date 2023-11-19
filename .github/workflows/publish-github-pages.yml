@@ -2,17 +2,18 @@ name: Publish to GitHub Pages
 run-name: ${{ github.actor }} is publishing to GitHub pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches:
+      - main
+  release:
+    types:
+      - published
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
-  contents: read
-  id-token: write
-  pages: write
+  contents: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -20,22 +21,29 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  helpDocVersion_PATH: /
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Update helpDocVersion_PATH for releases
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: echo helpDocVersion_PATH=/version/$(echo $GITHUB_REF | cut -d / -f 3 | cut -d v -f 2- | cut -d . -f 1,2)/ >> $GITHUB_ENV
+
+      - name: Update helpDocVersion_PATH for non-main branches
+        if: ${{ github.ref_type == 'branch' && github.ref_name != 'main'}}
+        run: echo helpDocVersion_PATH=/preview/ >> $GITHUB_ENV
+
       - name: Checkout 🛎️
         uses: actions/checkout@v3      
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload docs folder repository only
-          path: './docs'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:         
+          branch: github-pages # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
+          target_folder: ${{ env.helpDocVersion_PATH }}
+          clean: true # Automatically remove deleted files from the deploy branch
+          clean-exclude: '["version"]'
