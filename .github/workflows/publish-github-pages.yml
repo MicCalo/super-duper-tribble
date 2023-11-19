@@ -47,6 +47,6 @@ jobs:
         with:         
           branch: github-pages # The branch the action should deploy to.
           folder: docs # The folder the action should deploy.
-          target_folder: ${{ env.helpDocVersion_PATH }}
+          target-folder: ${{ env.helpDocVersion_PATH }}
           #clean: true # Automatically remove deleted files from the deploy branch
           #clean-exclude: '["version"]'
