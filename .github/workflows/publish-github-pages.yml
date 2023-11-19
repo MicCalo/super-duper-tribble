@@ -1,4 +1,5 @@
 name: Publish to GitHub Pages
+run-name: ${{ github.actor }} is publishing to GitHub pages
 on: [push]
 
 jobs:
