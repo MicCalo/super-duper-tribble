@@ -49,4 +49,4 @@ jobs:
           folder: docs # The folder the action should deploy.
           target-folder: ${{ env.helpDocVersion_PATH }}
           clean: true # Automatically remove deleted files from the deploy branch
-          clean-exclude: '["version"]'
+          clean-exclude: version
