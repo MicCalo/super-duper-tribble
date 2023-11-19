@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -33,7 +34,7 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
