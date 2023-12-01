@@ -48,6 +48,6 @@ jobs:
           branch: github-pages # The branch the action should deploy to.
           folder: docs # The folder the action should deploy.
           target-folder: ${{ env.helpDocVersion_PATH }}
-          commit-message: Automated push to gitbub pages ${{ github.event.head_commit.message }}
+          commit-message: Automated push to github-pages '${{ github.event.head_commit.message }}'
           clean: true # Automatically remove deleted files from the deploy branch
           clean-exclude: version
