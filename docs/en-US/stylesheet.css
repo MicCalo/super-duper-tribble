@@ -3,10 +3,10 @@ a{
 }
 
 body {
-    counter-reset: habakuk;
+    counter-reset: habakuk 10;
 }
 
 .counter-test::before{
-    counter-increment: habakuk;
+    counter-increment: habakuk 2;
     content: 'Line ' counter(habakuk) ': ';
 }
